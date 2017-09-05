@@ -27,7 +27,13 @@ def main():
     with open(filePath) as stream:
         for line in stream:
             if foundClass is False:
-                if 'class' not in line:
+                commentIndex = line.find('//')
+                classIndex = line[:commentIndex].find('class')
+
+                if classIndex == -1:
+                    continue
+
+                if line[classIndex:commentIndex].find(';') != -1:
                     continue
                 className = line.split('class ')[-1].split()[0]
                
